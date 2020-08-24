@@ -1,0 +1,20 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  annotations:
+    helm.sh/resource-policy: "keep"
+    meta.helm.sh/release-name: "{{ $.Release.Name }}"
+    meta.helm.sh/release-namespace: "{{ $.Release.Namespace }}"
+  name: dsmr-reader-postgres-data
+  labels:
+    app: dsmr-reader-postgres-data
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "10Gi"
+  storageClassName: local-path
